@@ -1,32 +1,62 @@
-<div class="card">
-    <div class="settings-grid">
-        <div class="field field-lang">
-            <label for="lang">Language</label>
-            <select class="select" id="lang" name="lang">
-                {% for language in languages %}
-                <option value="{{ language.code }}" {% if language.code==default_language %} selected{% endif %}>{{
-                    language.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="field">
-            <label for="min">Smallest number</label>
-            <input class="input num" id="min" name="min" type="number" inputmode="numeric" min="0" max="10000000000"
-                value="{{ min }}" />
-        </div>
-        <div class="field">
-            <label for="max">Largest number</label>
-            <input class="input num" id="max" name="max" type="number" inputmode="numeric" min="0" max="10000000000"
-                value="{{ max }}" />
-            <p class="hint" id="range-hint" aria-live="polite"></p>
-        </div>
-        <div class="field">
-            <label for="speed">Speech speed</label>
-            <select class="select" id="speed" name="speed">
-                {% for (value, name) in speeds %}
-                <option value="{{ value }}" {% if *value==default_speed %} selected{% endif %}>{{ name }}</option>
-                {% endfor %}
-            </select>
-        </div>
+<div
+  class="card"
+  id="settings"
+  hx-get="/answer"
+  hx-trigger="change"
+  hx-include="#settings [name]"
+  hx-target="#panel-answer"
+  hx-swap="outerHTML"
+>
+  <div class="settings-grid">
+    <div class="field field-lang">
+      <label for="lang">Language</label>
+      <select class="select" id="lang" name="lang">
+        {% for language in languages %} {% if language.code == selected_language
+        %}
+        <option value="{{ language.code }}" selected>
+          {{ language.name }}
+        </option>
+        {% else %}
+        <option value="{{ language.code }}">{{ language.name }}</option>
+        {% endif %} {% endfor %}
+      </select>
     </div>
+    <div class="field">
+      <label for="min">Smallest number</label>
+      <input
+        class="input num"
+        id="min"
+        name="min"
+        type="number"
+        inputmode="numeric"
+        min="0"
+        max="10000000000"
+        value="{{ min }}"
+      />
+    </div>
+    <div class="field">
+      <label for="max">Largest number</label>
+      <input
+        class="input num"
+        id="max"
+        name="max"
+        type="number"
+        inputmode="numeric"
+        min="0"
+        max="10000000000"
+        value="{{ max }}"
+      />
+      <p class="hint" id="range-hint" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="speed">Speech speed</label>
+      <select class="select" id="speed" name="speed">
+        {% for (value, name) in speeds %} {% if *value == selected_speed %}
+        <option value="{{ value }}" selected>{{ name }}</option>
+        {% else %}
+        <option value="{{ value }}">{{ name }}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </div>
+  </div>
 </div>

@@ -1,14 +1,61 @@
-<div class="row" style="justify-content: center;">
-    <button class="speaker-btn" id="btn-replay" aria-label="Replay the number">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M11 5 6.5 9H3v6h3.5L11 19V5Z" fill="currentColor" stroke="none" />
-            <path d="M15 9.5a4 4 0 0 1 0 5" />
-            <path d="M17.5 7a8 8 0 0 1 0 10" />
-        </svg>
+<div id="panel-answer" class="stack" style="gap: var(--gap-md)">
+  <div class="row" style="justify-content: center">
+    <button
+      class="speaker-btn"
+      id="btn-replay"
+      aria-label="Replay the number"
+      hx-get="/audio/preview"
+      hx-include="#settings [name]"
+      hx-vals='{"text": "{{ number }}"}'
+      hx-target="#audio-slot"
+      hx-swap="innerHTML"
+      onclick="this.closest('#panel-answer').querySelector('input').focus()"
+    >
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path
+          d="M11 5 6.5 9H3v6h3.5L11 19V5Z"
+          fill="currentColor"
+          stroke="none"
+        />
+        <path d="M15 9.5a4 4 0 0 1 0 5" />
+        <path d="M17.5 7a8 8 0 0 1 0 10" />
+      </svg>
     </button>
+  </div>
+  <p class="meta" style="margin: 0">
+    Replay as often as you like. Then type what you heard.
+  </p>
+  <form
+    class="stack"
+    style="gap: var(--gap-md)"
+    hx-post="/feedback"
+    hx-target="#panel-answer"
+    hx-swap="outerHTML"
+  >
+    <input type="hidden" name="number" value="{{ number }}" />
+    <input
+      class="input answer-input"
+      id="answer"
+      name="guess"
+      type="number"
+      inputmode="numeric"
+      autocomplete="off"
+      placeholder="?"
+      aria-label="Your answer in digits"
+      autofocus
+      required
+    />
+    <button class="btn btn-primary" id="btn-check" type="submit">Check</button>
+  </form>
+  <div id="audio-slot" aria-hidden="true"></div>
 </div>
-<p class="meta" style="margin: 0;">Replay as often as you like. Then type what you heard.</p>
-<input class="input answer-input" id="answer" type="text" inputmode="numeric" autocomplete="off" placeholder="?"
-    aria-label="Your answer in digits" />
-<button class="btn btn-primary" id="btn-check" disabled>Check</button>

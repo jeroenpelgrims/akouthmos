@@ -1,30 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Akouthmos · Number listening trainer{% endblock title %}</title>
+    <title>
+      {% block title %}Akouthmos · Number listening trainer{% endblock title %}
+    </title>
     <link rel="stylesheet" href="/static/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header class="topnav">
-        <div class="container topnav-inner">
-            <span class="logo">Akouthmos</span>
-            <span class="tag num" id="range-tag">0 – 100</span>
-        </div>
+      <div class="container topnav-inner">
+        <span class="logo">Akouthmos</span>
+      </div>
     </header>
 
     <main id="content">{% block content %}{% endblock content %}</main>
 
     <footer class="pagefoot">
-        <div class="container row-between">
-            <span>Akouthmos · number listening trainer</span>
-            <span class="meta">Audio uses your device's built-in speech voices</span>
-        </div>
+      <div class="container row-between">
+        <span>Akouthmos · number listening trainer</span>
+      </div>
     </footer>
-</body>
-
+  </body>
 </html>

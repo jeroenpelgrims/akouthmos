@@ -1,43 +1,30 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <section class="section">
-  <div class="container app-col stack" style="gap: var(--gap-lg);">
-
-    <div class="stack" style="gap: var(--gap-xs);">
+  <div class="container app-col stack" style="gap: var(--gap-lg)">
+    <div class="stack" style="gap: var(--gap-xs)">
       <p class="eyebrow">Number listening</p>
-      <h1>Hear the number.<br>Type the digits.</h1>
-      <p class="lead">A spoken number in your target language. Your job: write it before you see it.</p>
+      <h1>Hear the number.<br />Type the digits.</h1>
+      <p class="lead">
+        A spoken number in your target language. Your job: write it before you
+        see it.
+      </p>
     </div>
 
     {{ settings|safe }}
 
-    <div class="card stack" style="gap: var(--gap-md); text-align: center;">
-
-      <!-- idle -->
-      <div id="panel-idle" class="stack" style="gap: var(--gap-md); padding-block: var(--gap-sm);">
-        <span id="audio_preview" hidden></span>
-        <input id="current-number" name="text" value="{{ number }}" />
-        <button class="speaker-btn" id="btn-start" aria-label="Play a number" hx-get="/audio/preview"
-          hx-include="#lang, #current-number, #speed" hx-target="#audio_preview" hx-swap="innerHTML">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M8 5.5v13a1 1 0 0 0 1.54.84l10.2-6.5a1 1 0 0 0 0-1.68L9.54 4.66A1 1 0 0 0 8 5.5Z" />
-          </svg>
-        </button>
-        <p class="meta">Press play — a random number is spoken aloud.</p>
-      </div>
-
-      <!-- answering -->
-      <div id="panel-answer" class="stack" style="gap: var(--gap-md);" hidden>
-        {{ answer|safe }}
-      </div>
+    <div class="card stack" style="gap: var(--gap-md); text-align: center">
+      {{ answer|safe }}
 
       <!-- feedback -->
-      <div id="panel-feedback" class="feedback-panel stack" style="gap: var(--gap-md);" hidden>
+      <div
+        id="panel-feedback"
+        class="feedback-panel stack"
+        style="gap: var(--gap-md)"
+        hidden
+      >
         {{ feedback|safe }}
       </div>
     </div>
-
   </div>
 </section>
 {% endblock content %}

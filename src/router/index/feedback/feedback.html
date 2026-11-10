@@ -1,30 +1,99 @@
-<span class="pill {% if correct %}pill-ok{% else %}pill-err{% endif %}" style="align-self: center;">
-    {% if correct %}Correct{% else %}Not quite{% endif %}
-</span>
-<p class="reveal-num num">{{ number }}</p>
-<p class="meta" style="margin: 0;">Heard in {{ language_name }}</p>
-<div class="compare" {% if correct %} hidden{% endif %}>
+<div id="panel-answer" class="stack" style="gap: var(--gap-md)">
+  <span
+    class="pill {% if correct %}pill-ok pill-pop{% else %}pill-err{% endif %}"
+    style="align-self: center"
+  >
+    {% if correct %}
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 12.5 9.5 18 20 6.5" />
+    </svg>
+    Correct{% else %}Not quite{% endif %}
+  </span>
+  <p class="reveal-num num{% if correct %} reveal-ok{% endif %}">{{ number }}</p>
+  <p
+    class="meta"
+    style="margin: 0"
+    hx-get="/word"
+    hx-trigger="load"
+    hx-include="#settings [name]"
+    hx-vals='{"number": "{{ number }}"}'
+  >
+    <span class="skeleton" aria-label="Loading"></span>
+  </p>
+  <div class="compare" {% if correct %} hidden{% endif %}>
     <div class="cell you">
-        <div class="meta">You wrote</div>
-        <div class="val num">{{ guess }}</div>
+      <div class="meta">You wrote</div>
+      <div class="val num">{{ guess }}</div>
     </div>
-    <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M5 12h14M13 6l6 6-6 6" />
+    <svg
+      class="arrow"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
     <div class="cell right">
-        <div class="meta">Correct answer</div>
-        <div class="val num">{{ number }}</div>
+      <div class="meta">Correct answer</div>
+      <div class="val num">{{ number }}</div>
     </div>
-</div>
-<div class="row" style="justify-content: center;">
-    <button class="btn btn-secondary" id="btn-rehear">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M11 5 6.5 9H3v6h3.5L11 19V5Z" fill="currentColor" stroke="none" />
-            <path d="M15 9.5a4 4 0 0 1 0 5" />
-        </svg>
-        Hear it again
+  </div>
+  <div class="row" style="justify-content: center">
+    <button
+      class="btn btn-secondary"
+      id="btn-rehear"
+      hx-get="/audio/preview"
+      hx-include="#settings [name]"
+      hx-vals='{"text": "{{ number }}"}'
+      hx-target="#audio-slot"
+      hx-swap="innerHTML"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path
+          d="M11 5 6.5 9H3v6h3.5L11 19V5Z"
+          fill="currentColor"
+          stroke="none"
+        />
+        <path d="M15 9.5a4 4 0 0 1 0 5" />
+      </svg>
+      Hear it again
     </button>
-    <button class="btn btn-primary" id="btn-next">Next number</button>
+    <button
+      class="btn btn-primary"
+      id="btn-next"
+      hx-get="/answer"
+      hx-include="#settings [name]"
+      hx-target="#panel-answer"
+      hx-swap="outerHTML"
+    >
+      Next number
+    </button>
+  </div>
+  <div id="audio-slot" aria-hidden="true"></div>
 </div>

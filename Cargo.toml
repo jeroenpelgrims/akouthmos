@@ -18,3 +18,4 @@ reqwest = "0.12.28"
 moka = { version = "0.12", features = ["future"] }
 rand = "0.9"
 tracing = "0.1"
+dotenvy = "0.15.7"
