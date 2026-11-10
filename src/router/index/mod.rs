@@ -21,7 +21,7 @@ impl Default for GameSettings {
     fn default() -> Self {
         Self {
             min: 0,
-            max: 100000,
+            max: 1000,
             language: "el",
             speed: 1.0,
         }
