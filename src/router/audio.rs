@@ -1,3 +1,5 @@
+use askama::Template;
+use askama_web::WebTemplate;
 use axum::{
     extract::{Path, Query},
     http::{StatusCode, header},
@@ -16,6 +18,14 @@ pub async fn audio(Path((language, text)): Path<(String, String)>) -> impl IntoR
     }
 }
 
+#[derive(Template, WebTemplate)]
+#[template(path = "router/audio_preview.html")]
+pub struct AudioPreviewTemplate {
+    pub lang: String,
+    pub text: String,
+    pub speed: f64,
+}
+
 #[derive(Deserialize)]
 pub struct AudioPreviewParams {
     pub lang: String,
@@ -23,10 +33,16 @@ pub struct AudioPreviewParams {
     pub speed: Option<f64>,
 }
 
-pub async fn audio_preview(Query(params): Query<AudioPreviewParams>) -> String {
-    let speed = params.speed.unwrap_or(1.0).clamp(0.25, 4.0);
-    format!(
-        "<audio autoplay onloadedmetadata=\"this.playbackRate = {speed};\" src=\"/audio/{}/{}\"></audio>",
-        params.lang, params.text
-    )
+impl From<AudioPreviewParams> for AudioPreviewTemplate {
+    fn from(params: AudioPreviewParams) -> Self {
+        AudioPreviewTemplate {
+            lang: params.lang,
+            text: params.text,
+            speed: params.speed.unwrap_or(1.0).clamp(0.25, 4.0),
+        }
+    }
+}
+
+pub async fn audio_preview(Query(params): Query<AudioPreviewParams>) -> AudioPreviewTemplate {
+    params.into()
 }

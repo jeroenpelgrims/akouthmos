@@ -40,10 +40,15 @@ pub struct IndexTemplate {
 pub async fn index() -> IndexTemplate {
     let settings = GameSettings::default();
     let number = rand::random_range(settings.min..=settings.max);
+    let audio = crate::router::audio::AudioPreviewTemplate {
+        lang: settings.language.to_string(),
+        text: number.to_string(),
+        speed: settings.speed,
+    };
     IndexTemplate {
         number,
         settings: SettingsTemplate::from_game_settings(settings),
-        answer: AnswerTemplate { number },
+        answer: AnswerTemplate { number, audio },
         feedback: FeedbackTemplate::default(),
     }
 }
