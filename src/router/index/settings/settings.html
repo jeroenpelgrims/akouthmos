@@ -36,16 +36,30 @@
     </div>
     <div class="field">
       <label for="max">Largest number</label>
-      <input
-        class="input num"
-        id="max"
-        name="max"
-        type="number"
-        inputmode="numeric"
-        min="0"
-        max="10000000000"
-        value="{{ max }}"
-      />
+      <div class="input-group">
+        <input
+          class="input num"
+          id="max"
+          name="max"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          max="10000000000"
+          value="{{ max }}"
+        />
+        <button
+          type="button"
+          class="btn btn-secondary btn-max"
+          aria-label="Set largest number to 10000000000"
+          onclick="
+            const i = document.getElementById('max');
+            i.value = i.max;
+            i.dispatchEvent(new Event('change', { bubbles: true }));
+          "
+        >
+          Max
+        </button>
+      </div>
       <p class="hint" id="range-hint" aria-live="polite"></p>
     </div>
     <div class="field">
